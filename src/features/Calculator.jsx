@@ -17,9 +17,11 @@ export const Calculator = () => {
 		}
 	]
 	
+	const calculate = () => '' + eval(expression)
+	
 	const handleExpression = (e) => {	
 		if (e.key === 'Enter') {
-			setExpression('' + Function(`'use strict'; return (${expression})`)())
+			setExpression(calculate())
 			return
 		}
 		
