@@ -59,6 +59,7 @@ export const Calculator = () => {
 	}
 
 	const expressionStyle = {
+		borderRadius: '15px',
 		width: '100%',
 		textAlign: 'right',
 		fontSize: '2rem',
@@ -74,7 +75,15 @@ export const Calculator = () => {
 	return (
 		<div style={calculatorContainer}>
 			<div>
-				<input style={expressionStyle} type="text" value={expression} onKeyPress={handleExpression} onKeyDown={handleKeyDown} onChange={handleExpression}/>
+				<input 
+					style={expressionStyle} 
+					type="text"
+					value={expression}
+					onKeyPress={handleExpression}
+					onKeyDown={handleKeyDown} 
+					onChange={handleExpression}
+					autoFocus
+				/>
 			</div>
 			<div style={buttonsContainer}>
 				{buttonList.map((b) => <Button key={b.value} value={b.value} handleClick={valueClicked}/>)}
