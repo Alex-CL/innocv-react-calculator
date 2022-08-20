@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '../components'
 
-const validSymbols = '0123456789+-*/'
+const validSymbols = '0123456789+-*/.'
 
 export const Calculator = () => {
 	
@@ -10,21 +10,21 @@ export const Calculator = () => {
 	
 	const buttonList = [
 		{	
-			value: 9
+			value: 7
 		}, {	
 			value: 8
 		}, {	
-			value: 7
+			value: 9
 		}, {
 			value: '('
 		}, {
 			value: ')',
 		}, {
-			value: 6
+			value: 4
 		}, {
 			value: 5
 		}, {
-			value: 4
+			value: 6
 		}, {
 			value: 'x',
 			realValue: '*',
@@ -32,11 +32,11 @@ export const Calculator = () => {
 			value: '÷',
 			realValue: '/',
 		}, {
-			value: 1
+			value: 3
 		}, {
 			value: 2
 		}, {
-			value: 3
+			value: 1
 		}, {
 			value: '+'
 		}, {
