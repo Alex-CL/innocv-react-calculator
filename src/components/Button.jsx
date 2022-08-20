@@ -11,6 +11,7 @@ export const Button = (props) => {
 		borderRadius: '8px',
 		height: '80px',
 		width: '100px',
+		marginTop: '15px'
 	}
 	
 	const contentStyle = {
