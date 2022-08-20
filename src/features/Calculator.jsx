@@ -3,7 +3,7 @@ import { Button } from '../components'
 
 export const Calculator = () => {
 	
-	const [result, setResult] = useState('')
+	const [expression, setExpression] = useState('')
 	
 	const buttonList = [
 		{
@@ -17,31 +17,31 @@ export const Calculator = () => {
 		}
 	]
 	
-	const handleResult = (e) => {	
+	const handleExpression = (e) => {	
 		if (e.key === 'Enter') {
-			setResult('enter')
+			setExpression('' + Function(`'use strict'; return (${expression})`)())
 			return
 		}
 		
 		if ('0123456789'.includes(e.key)) {
-			setResult(result.slice(0, e.target.selectionStart) + e.key + result.slice(e.target.selectionStart))
+			setExpression(expression.slice(0, e.target.selectionStart) + e.key + expression.slice(e.target.selectionStart))
 			return
 		}
 		
 		if ('+-*/'.includes(e.key)) {
-			setResult(result.slice(0, e.target.selectionStart) + e.key + result.slice(e.target.selectionStart))
+			setExpression(expression.slice(0, e.target.selectionStart) + e.key + expression.slice(e.target.selectionStart))
 			return
 		}
 	}
 	
 	const handleKeyDown = (e) => {
 		if (e.key === 'Backspace') {
-			setResult(result.slice(0, e.target.selectionStart - 1) + result.slice(e.target.selectionStart))
+			setExpression(expression.slice(0, e.target.selectionStart - 1) + expression.slice(e.target.selectionStart))
 			return
 		}
 		
 		if (e.key === 'Delete') {
-			setResult(result.slice(0, e.target.selectionStart) + result.slice(e.target.selectionStart + 1))
+			setExpression(expression.slice(0, e.target.selectionStart) + expression.slice(e.target.selectionStart + 1))
 			return	
 		}
 	}
@@ -58,20 +58,25 @@ export const Calculator = () => {
 		height: '500px',
 	}
 
-	const resultStyle = {
+	const expressionStyle = {
 		width: '100%',
 		textAlign: 'right',
 		fontSize: '2rem',
 		height: '60px',
 		border: '1px solid #EEEEEE',
 	}
+	
+	const buttonsContainer = {
+		display: 'flex',
+		justifyContent: 'space-between'
+	}
 
 	return (
 		<div style={calculatorContainer}>
 			<div>
-				<input style={resultStyle} type="text" value={result} onKeyPress={handleResult} onKeyDown={handleKeyDown} onChange={handleResult}/>
+				<input style={expressionStyle} type="text" value={expression} onKeyPress={handleExpression} onKeyDown={handleKeyDown} onChange={handleExpression}/>
 			</div>
-			<div>
+			<div style={buttonsContainer}>
 				{buttonList.map((b) => <Button key={b.value} value={b.value} handleClick={valueClicked}/>)}
 			</div>
 		</div>
