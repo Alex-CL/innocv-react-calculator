@@ -16,11 +16,9 @@ export const Calculator = () => {
 		}, {	
 			value: 7
 		}, {
-			value: 'x',
-			realValue: '*',
+			value: '('
 		}, {
-			value: '÷',
-			realValue: '/',
+			value: ')',
 		}, {
 			value: 6
 		}, {
@@ -28,20 +26,33 @@ export const Calculator = () => {
 		}, {
 			value: 4
 		}, {
-			value: '+'
+			value: 'x',
+			realValue: '*',
 		}, {
-			value: '-'
+			value: '÷',
+			realValue: '/',
 		}, {
 			value: 1
 		}, {
 			value: 2
 		}, {
 			value: 3
-		}, {	
-			value: '=',
-			triggerEvent: calculate,
+		}, {
+			value: '+'
+		}, {
+			value: '-'
+		}, {
+			value: '←',
+			triggerEvent: removeLastElement,
 		}, {
 			value: 0
+		}, {
+			value: 'CE',
+			triggerEvent: clear,
+		}, {	
+			value: '=',
+			size: 2,
+			triggerEvent: calculate,
 		}
 	]
 	
@@ -57,6 +68,14 @@ export const Calculator = () => {
 			setErrorMessage('Expression is not valid')
 			return
 		}
+	}
+	
+	function removeLastElement() {
+		setExpression(expression.slice(0, expression.length - 1))
+	}
+
+	function clear() {
+		setExpression('')
 	}
 	
 	const handleExpression = (e) => {	

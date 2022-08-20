@@ -10,7 +10,7 @@ export const Button = (props) => {
 		border: `1px solid ${color}`,
 		borderRadius: '8px',
 		height: '80px',
-		minWidth: '120px',
+		minWidth: `${(props.size || 1) * 120}px`,
 		marginTop: '15px',
 		fontSize: '2rem',
 	}
