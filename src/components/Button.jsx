@@ -26,10 +26,6 @@ export const Button = (props) => {
 		backgroundColor: isHover ? '#C9C9C9' : '#EEEEEE',
 		cursor: isHover ? 'pointer' : 'auto',
 		color,
-		
-		'&:hover': {
-			background: 'red'
-		}
 	}
 
 	const handleClick = () => props.handleClick(props.value)
