@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '../components'
+
+const validSymbols = '0123456789+-*/'
 
 export const Calculator = () => {
 	
 	const [expression, setExpression] = useState('')
+	const [errorMessage, setErrorMessage] = useState('')
 	
 	const buttonList = [
 		{
@@ -17,23 +20,36 @@ export const Calculator = () => {
 		}
 	]
 	
-	const calculate = () => '' + eval(expression)
+	useEffect(() => {
+		setErrorMessage('')
+	}, [expression])
+	
+	const calculate = () => {
+		try {
+			const result = '' + eval(expression)
+			setExpression(result)
+		} catch (e) {
+			setErrorMessage('Expression is not valid')
+			return
+		}
+	}
 	
 	const handleExpression = (e) => {	
 		if (e.key === 'Enter') {
-			setExpression(calculate())
+			calculate()
 			return
 		}
 		
-		if ('0123456789'.includes(e.key)) {
-			setExpression(expression.slice(0, e.target.selectionStart) + e.key + expression.slice(e.target.selectionStart))
+		if (!validSymbols.includes(e.key)) {
 			return
 		}
 		
-		if ('+-*/'.includes(e.key)) {
-			setExpression(expression.slice(0, e.target.selectionStart) + e.key + expression.slice(e.target.selectionStart))
+		if (e.target.selectionStart === 0 && e.target.selectionEnd === expression.length) {
+			setExpression(e.key)
 			return
 		}
+		
+		setExpression(expression.slice(0, e.target.selectionStart) + e.key + expression.slice(e.target.selectionStart))
 	}
 	
 	const handleKeyDown = (e) => {
@@ -61,12 +77,18 @@ export const Calculator = () => {
 	}
 
 	const expressionStyle = {
+		border: `1px solid ${errorMessage ? 'red' : '#EEEEEE'}`,
 		borderRadius: '15px',
 		width: '100%',
 		textAlign: 'right',
 		fontSize: '2rem',
 		height: '60px',
-		border: '1px solid #EEEEEE',
+	}
+	
+	const errorStyle = {
+		marginTop: '10px',
+		textAlign: 'right',
+		color: 'red',
 	}
 	
 	const buttonsContainer = {
@@ -86,6 +108,7 @@ export const Calculator = () => {
 					onChange={handleExpression}
 					autoFocus
 				/>
+				<p style={errorStyle}>{errorMessage}</p>
 			</div>
 			<div style={buttonsContainer}>
 				{buttonList.map((b) => <Button key={b.value} value={b.value} handleClick={valueClicked}/>)}
