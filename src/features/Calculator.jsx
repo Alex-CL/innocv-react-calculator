@@ -9,14 +9,39 @@ export const Calculator = () => {
 	const [errorMessage, setErrorMessage] = useState('')
 	
 	const buttonList = [
-		{
+		{	
+			value: 9
+		}, {	
+			value: 8
+		}, {	
+			value: 7
+		}, {
+			value: 'x',
+			realValue: '*',
+		}, {
+			value: '÷',
+			realValue: '/',
+		}, {
+			value: 6
+		}, {
+			value: 5
+		}, {
+			value: 4
+		}, {
 			value: '+'
 		}, {
 			value: '-'
 		}, {
-			value: 'x'
+			value: 1
 		}, {
-			value: '÷'
+			value: 2
+		}, {
+			value: 3
+		}, {	
+			value: '=',
+			triggerEvent: calculate,
+		}, {
+			value: 0
 		}
 	]
 	
@@ -24,7 +49,7 @@ export const Calculator = () => {
 		setErrorMessage('')
 	}, [expression])
 	
-	const calculate = () => {
+	function calculate() {
 		try {
 			const result = '' + eval(expression)
 			setExpression(result)
@@ -40,7 +65,7 @@ export const Calculator = () => {
 			return
 		}
 		
-		if (!validSymbols.includes(e.key)) {
+		if (!validSymbols.includes(e.key)) {	
 			return
 		}
 		
@@ -53,18 +78,24 @@ export const Calculator = () => {
 	}
 	
 	const handleKeyDown = (e) => {
-		if (e.key === 'Backspace') {
-			setExpression(expression.slice(0, e.target.selectionStart - 1) + expression.slice(e.target.selectionStart))
+		if (['Backspace', 'Delete'].includes(e.key) 
+			&& e.target.selectionStart === 0 && e.target.selectionEnd === expression.length) {
+	
+			setExpression('')
+			return
+		}
+	
+		if (e.key === 'Backspace') {	setExpression(expression.slice(0, e.target.selectionStart - 1) + expression.slice(e.target.selectionStart))
 			return
 		}
 		
-		if (e.key === 'Delete') {
+		if (e.key === 'Delete') {	
 			setExpression(expression.slice(0, e.target.selectionStart) + expression.slice(e.target.selectionStart + 1))
 			return	
 		}
 	}
 	
-	const valueClicked = (v) => console.log(v)
+	const valueClicked = (v) => setExpression(expression + v)
 	
 	const calculatorContainer = {
 		background: '#edf7f9',
@@ -89,11 +120,16 @@ export const Calculator = () => {
 		marginTop: '10px',
 		textAlign: 'right',
 		color: 'red',
+		height: '10px',
 	}
 	
 	const buttonsContainer = {
 		display: 'flex',
-		justifyContent: 'space-between'
+		justifyContent: 'space-around',
+		flexWrap: 'wrap',
+		height: '400px',
+		width: '80%',
+		margin: 'auto',
 	}
 
 	return (
@@ -111,7 +147,7 @@ export const Calculator = () => {
 				<p style={errorStyle}>{errorMessage}</p>
 			</div>
 			<div style={buttonsContainer}>
-				{buttonList.map((b) => <Button key={b.value} value={b.value} handleClick={valueClicked}/>)}
+				{buttonList.map((b) => <Button key={b.value} {...b} handleClick={valueClicked}/>)}
 			</div>
 		</div>
 	)

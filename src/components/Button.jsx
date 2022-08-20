@@ -10,7 +10,7 @@ export const Button = (props) => {
 		border: `1px solid ${color}`,
 		borderRadius: '8px',
 		height: '80px',
-		width: '100px',
+		minWidth: '120px',
 		marginTop: '15px',
 		fontSize: '2rem',
 	}
@@ -29,7 +29,14 @@ export const Button = (props) => {
 		color,
 	}
 
-	const handleClick = () => props.handleClick(props.value)
+	const handleClick = () => {
+		if (props.triggerEvent) {
+			props.triggerEvent()
+			return
+		}
+	
+		props.handleClick(props.realValue || props.value)
+	}
 
 	return (
 		<div 
