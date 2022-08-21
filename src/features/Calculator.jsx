@@ -50,11 +50,12 @@ export const Calculator = () => {
 		}, {
 			value: 'CE',
 			triggerEvent: clear,
+		}, {
+			value: '.',
 		}, {	
 			value: '=',
-			size: 2,
 			triggerEvent: calculate,
-		}
+		},
 	]
 	
 	useEffect(() => {
