@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { evaluate } from 'mathjs'
 import { Button } from '../components'
 
 const validSymbols = '0123456789+-*/.'
@@ -62,7 +63,7 @@ export const Calculator = () => {
 	
 	function calculate() {
 		try {
-			const result = '' + eval(expression)
+			const result = '' + evaluate(expression)
 			setExpression(result)
 		} catch (e) {
 			setErrorMessage('Expression is not valid')
